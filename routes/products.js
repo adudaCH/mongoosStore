@@ -38,11 +38,11 @@ router.get("/", async (req, res) => {
 
 router.get("/:productId", async (req, res) => {
     try {
-        const { error } = await productSchema.findOne(req.params.productId);
-        if (!product) return res.status(404).send("Product not exists");
+        const product = await product.findOne({ productId: req.params.productId });
+        if (!product) return res.status(404).send("Product not found");
         res.status(200).send(product);
     } catch (error) {
-        res.status(400).send(error);
+        res.status(404).send("Product not found");
     }
 });
 
